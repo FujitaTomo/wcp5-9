@@ -3,12 +3,42 @@
   <head>
     <title>Wcp59</title>
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   </head>
 
   <body>
+    <header>
+  		<nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+        <div class="navbar-header navbar-left">
+          <h3 style="color: white;">Bookers</h3>
+        </div>
+  			<ul class="nav navbar-nav navbar-right">
+  				<% if user_signed_in? %>
+  					<li><%= link_to user_path(current_user) do %><i class="fas fa-home"></i>Home<% end %></li>
+            <li><%= link_to users_path do %><i class="fas fa-users"></i>Users<% end %></li>
+  					<li><%= link_to books_path do %><i class="fas fa-book"></i>Books<% end %></li>
+  					<li><%= link_to destroy_user_session_path, method: :delete do %><i class="fas fa-sign-out-alt"></i>Logout<% end %></li>
+          <% else %>
+  					<li><%= link_to root_path do %><i class="fas fa-home"></i>Home<% end %></li>
+  					<li><%= link_to about_path do %><i class="fas fa-hourglass-start"></i>About<% end %></li>
+            <li><%= link_to new_user_registration_path do %><i class="fas fa-edit"></i>Signup<% end %></li>
+  					<li><%= link_to new_user_session_path do %><i class="fas fa-sign-in-alt"></i>Login<% end %></li>
+				  <% end %>
+			   </ul>
+        </div>
+		  </nav>
+  	</header>
+
+    <div class="container">
     <%= yield %>
+    </div>
+  </div>
   </body>
+  <br><br>
+  <footer class="footer">
+    <p class="text-muted" style="text-align: right; color: white;">CopyRight Infratop.inc</p>
+</footer>
 </html>

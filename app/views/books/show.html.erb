@@ -1,0 +1,18 @@
+<%= render "users/list", user: @user, book: @new_book %>
+<h2>Book詳細</h2>
+	<div class="col-lg-9">
+	<table class="table table-hover">
+			<tr>
+				<td><%= attachment_image_tag @book.user, :user_image, :fill, 100, 100, format: 'jpeg', class: "pull-left profile-img", fallback:"noimage.jpeg",size: '40x40' %><br>
+					<%= link_to @user.name,user_path(@user) %>
+				</td>
+				<td><%= @book.title %></td>
+				<td><%= @book.body %></td>
+				<% if @book.user == current_user %>
+				<td><%= link_to "edit",edit_book_path(@book.id), class: "btn btn-success" %></td>
+				<td><%= link_to "destroy",book_path(@book), method: :delete, class: "btn btn-danger" %></td>
+				<% end %>
+			</tr>
+	</table>
+	
+	</div>
