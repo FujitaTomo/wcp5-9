@@ -17,22 +17,31 @@ class BooksController < ApplicationController
   def create
     book = Book.new(book_params)
     book.user_id = current_user.id
-    book.save
+    if book.save
     redirect_to user_path(current_user)
+    else
+    redirect_to user_path(current_user), warning:"文字制限を超えています"
+  end
   end
 
   def edit
-    @book = Book.find(params[:id])
-    if @book.user_id != current_user.id
-      redirect_to book_path(@book)
+    @book = Book.find_by(id: params[:id])
+    if @book == nil
+      redirect_to user_path(current_user), warning:"存在しない本を編集する事はできません"
+
+    elsif @book.user_id != current_user.id
+      redirect_to book_path(@book), warning: "他のユーザーの投稿を編集する事はできません"
     end
   end
 
   def update
     book = Book.find(params[:id])
-    book.update(book_params)
+    if book.update(book_params)
     redirect_to book_path(book.id)
+    else
+    redirect_to edit_book_path(book.id), warning: "文字制限を超えています"
   end
+end
 
   def destroy
     book = Book.find(params[:id])

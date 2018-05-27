@@ -15,9 +15,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
-    if @user.id != current_user.id
-      redirect_to user_path(@user)
+    @user = User.find_by(id: params[:id])
+    if @user == nil
+      redirect_to user_path(current_user), warning:"存在しないユーザーです"
+    elsif @user.id != current_user.id
+      redirect_to user_path(@user), warning:"他のユーザープロフィールを編集する事はできません"
     end
   end
 
